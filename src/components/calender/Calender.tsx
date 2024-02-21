@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getFirstDayOfMonth, isLeapYear } from "../../utils";
 import { dayMap, monthDaysMap, monthMap } from "./contants";
 
@@ -6,19 +6,33 @@ export const Calender = () => {
   const date = new Date();
   const currentDate = date.getDate();
   const currentDay = date.getDay();
-  const [currentMonth, setcurrentMonth] = useState(monthMap[date.getMonth()]);
+  const [currentMonth, setcurrentMonth] = useState(date.getMonth());
   const currentYear = date.getFullYear();
-  const firstDayOfMonth = getFirstDayOfMonth(currentYear, currentMonth);
+
   const [calenderData, setcalenderData] = useState(
-    getCalenderData(firstDayOfMonth, currentYear, currentMonth)
+    getCalenderData(currentYear, monthMap[currentMonth])
   );
 
-  const handleNext = () => {};
+  const handleNext = () => {
+    setcurrentMonth((prev) => prev + 1);
+  };
+  const handlePrev = () => {
+    setcurrentMonth((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    const newCalenderData = getCalenderData(
+      currentYear,
+      monthMap[currentMonth]
+    );
+    setcalenderData(newCalenderData);
+  }, [currentMonth, currentYear]);
+
   return (
     <div className="flex m-auto  flex-col w-max items-center justify-center my-8">
       <div className="mb-4 w-full flex justify-between">
-        <button>prev</button>
-        {currentMonth} , {currentYear}
+        <button onClick={handlePrev}>prev</button>
+        {monthMap[currentMonth]} , {currentYear}
         <button onClick={handleNext}>next</button>
       </div>
       <div>
@@ -35,7 +49,11 @@ export const Calender = () => {
           return (
             <div className="flex">
               {week.map((date) => {
-                return <p className="w-12 h-12">{date.date}</p>;
+                return (
+                  <p className={`w-12 h-12 ${date.date === 0 && "opacity-0"}`}>
+                    {date.date}
+                  </p>
+                );
               })}
             </div>
           );
@@ -45,11 +63,8 @@ export const Calender = () => {
   );
 };
 
-const getCalenderData = (
-  firstDayOfMonth: string,
-  currentYear: number,
-  currentMonth: string
-) => {
+const getCalenderData = (currentYear: number, currentMonth: string) => {
+  const firstDayOfMonth = getFirstDayOfMonth(currentYear, currentMonth);
   const calenderData = [];
   let weekArray = [];
   let day = 0;
@@ -59,9 +74,10 @@ const getCalenderData = (
       day++;
     } else break;
   }
-  const totalDays = isLeapYear(currentYear)
-    ? monthDaysMap[currentMonth] + 1
-    : monthDaysMap[currentMonth];
+  const totalDays =
+    isLeapYear(currentYear) && monthDaysMap[currentMonth] === 28
+      ? 29
+      : monthDaysMap[currentMonth];
   for (let i = 1; i <= totalDays; i++) {
     weekArray.push({ day: dayMap[day], date: i });
     day++;
