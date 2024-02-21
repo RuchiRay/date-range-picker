@@ -7,17 +7,25 @@ export const Calender = () => {
   const currentDate = date.getDate();
   const currentDay = date.getDay();
   const [currentMonth, setcurrentMonth] = useState(date.getMonth());
-  const currentYear = date.getFullYear();
+  const [currentYear, setcurrentYear] = useState(date.getFullYear());
 
   const [calenderData, setcalenderData] = useState(
     getCalenderData(currentYear, monthMap[currentMonth])
   );
 
   const handleNext = () => {
-    setcurrentMonth((prev) => prev + 1);
+    if (currentMonth + 1 < 12) setcurrentMonth((prev) => prev + 1);
+    else {
+      setcurrentMonth(0);
+      setcurrentYear((prev) => prev + 1);
+    }
   };
   const handlePrev = () => {
-    setcurrentMonth((prev) => prev - 1);
+    if (currentMonth - 1 >= 0) setcurrentMonth((prev) => prev - 1);
+    else {
+      setcurrentMonth(11);
+      setcurrentYear((prev) => prev - 1);
+    }
   };
 
   useEffect(() => {
