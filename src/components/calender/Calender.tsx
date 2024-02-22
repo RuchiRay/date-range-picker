@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { getCalenderData } from "../../utils";
 import { monthMap } from "./contants";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
+import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
+import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
 export const Calender = () => {
   const date = new Date();
   const currentDate = date.getDate();
   const currentDay = date.getDay();
+
   const [currentMonth, setcurrentMonth] = useState(date.getMonth());
   const [currentYear, setcurrentYear] = useState(date.getFullYear());
-
+  const [showOtherYears, setshowOtherYears] = useState(false);
   const [calenderData, setcalenderData] = useState(
     getCalenderData(currentYear, monthMap[currentMonth])
   );
@@ -56,28 +59,8 @@ export const Calender = () => {
         </button>
       </div>
       <div>
-        <div className="flex">
-          <p className="w-12 h-12">Su</p>
-          <p className="w-12 h-12">Mo</p>
-          <p className="w-12 h-12">Tu</p>
-          <p className="w-12 h-12">We</p>
-          <p className="w-12 h-12">Th</p>
-          <p className="w-12 h-12">Fr</p>
-          <p className="w-12 h-12">Sa</p>
-        </div>
-        {calenderData.map((week) => {
-          return (
-            <div className="flex">
-              {week.map((date) => {
-                return (
-                  <p className={`w-12 h-12 ${date.date === 0 && "opacity-0"}`}>
-                    {date.date}
-                  </p>
-                );
-              })}
-            </div>
-          );
-        })}
+        <WeekRenderer />
+        <DatesRenderer calenderData={calenderData} />
       </div>
     </div>
   );
