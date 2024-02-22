@@ -15,10 +15,9 @@ export const Calender = () => {
   const [currentYear, setcurrentYear] = useState(date.getFullYear());
   const [showOtherYears, setshowOtherYears] = useState(false);
   const [calenderData, setcalenderData] = useState(
-    getCalenderData(currentYear, monthMap[currentMonth])
+    getCalenderData(currentYear, currentMonth)
   );
   const [range, setRange] = useState<Range>({ first: null, second: null });
-  console.log(range, "range");
 
   const handleNext = () => {
     if (currentMonth + 1 < 12) setcurrentMonth((prev) => prev + 1);
@@ -36,10 +35,7 @@ export const Calender = () => {
   };
 
   useEffect(() => {
-    const newCalenderData = getCalenderData(
-      currentYear,
-      monthMap[currentMonth]
-    );
+    const newCalenderData = getCalenderData(currentYear, currentMonth);
     setcalenderData(newCalenderData);
   }, [currentMonth, currentYear]);
 

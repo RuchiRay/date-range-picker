@@ -1,12 +1,7 @@
-import { Range } from "../calender/interface";
-
-export interface CalenderData {
-  day: string;
-  date: number;
-}
+import { CalenderData, Range } from "../calender/interface";
 
 export interface DatesRendererProps {
-  calenderData: CalenderData[][];
+  calenderData: CalenderData;
   setRange: React.Dispatch<React.SetStateAction<Range>>;
   currentMonth: number;
   currentYear: number;

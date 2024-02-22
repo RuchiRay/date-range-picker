@@ -29,13 +29,20 @@ export const DatesRenderer = ({
       });
     }
   };
+  console.log(range);
 
   return (
     <div className="flex flex-col gap-1">
-      {calenderData.map((week) => {
+      {calenderData.dates.map((week) => {
         return (
           <div key={Math.random()} className="flex gap-1">
             {week.map((date) => {
+              const fullDate = createDate(
+                date.date,
+                calenderData.month,
+                currentYear
+              );
+
               return (
                 <button
                   onClick={() => handleRange(date.date)}
@@ -43,14 +50,14 @@ export const DatesRenderer = ({
                   className={`w-11 h-11 flex justify-center items-center cursor-pointer rounded-md  ${
                     date.date === 0 && "opacity-0"
                   } ${
-                    (date.date === range.first?.getDate() ||
-                      date.date === range.second?.getDate()) &&
+                    (fullDate.getTime() === range.first?.getTime() ||
+                      fullDate.getTime() === range.second?.getTime()) &&
                     "bg-blue-700 text-white"
                   } ${
-                    range?.first?.getDate() &&
-                    date.date > range?.first?.getDate() &&
-                    range?.second?.getDate() &&
-                    date.date < range?.second?.getDate() &&
+                    range?.first &&
+                    fullDate > range?.first &&
+                    range?.second &&
+                    fullDate < range?.second &&
                     "bg-blue-300"
                   } `}
                 >

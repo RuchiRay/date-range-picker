@@ -1,4 +1,5 @@
-import { dayMap, monthDaysMap } from "./components/calender/contants";
+import { dayMap, monthDaysMap, monthMap } from "./components/calender/contants";
+import { CalenderData } from "./components/calender/interface";
 
 export const getFirstDayOfMonth = (
   currentYear: number,
@@ -14,9 +15,13 @@ export const isLeapYear = (year: number) => {
   else return false;
 };
 
-export const getCalenderData = (currentYear: number, currentMonth: string) => {
-  const firstDayOfMonth = getFirstDayOfMonth(currentYear, currentMonth);
-  const calenderData = [];
+export const getCalenderData = (currentYear: number, currentMonth: number) => {
+  const firstDayOfMonth = getFirstDayOfMonth(
+    currentYear,
+    monthMap[currentMonth]
+  );
+  const calenderData: CalenderData = { month: currentMonth, dates: [] };
+
   let weekArray = [];
   let day = 0;
   for (const key in dayMap) {
@@ -25,20 +30,23 @@ export const getCalenderData = (currentYear: number, currentMonth: string) => {
       day++;
     } else break;
   }
+
   const totalDays =
-    isLeapYear(currentYear) && monthDaysMap[currentMonth] === 28
+    isLeapYear(currentYear) && monthDaysMap[monthMap[currentMonth]] === 28
       ? 29
-      : monthDaysMap[currentMonth];
+      : monthDaysMap[monthMap[currentMonth]];
+
   for (let i = 1; i <= totalDays; i++) {
     weekArray.push({ day: dayMap[day], date: i });
     day++;
     if (day === 7) {
-      calenderData.push(weekArray);
+      calenderData.dates.push(weekArray);
       weekArray = [];
       day = 0;
     }
   }
-  calenderData.push(weekArray);
+  calenderData.dates.push(weekArray);
+
   return calenderData;
 };
 

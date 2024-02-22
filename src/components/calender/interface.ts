@@ -14,3 +14,13 @@ export interface Range {
   first: Date | null;
   second: Date | null;
 }
+
+export interface CalenderData {
+  month: number;
+  dates: CalenderDate[][];
+}
+
+export interface CalenderDate {
+  day: string;
+  date: number;
+}
