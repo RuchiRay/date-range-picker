@@ -17,7 +17,7 @@ export const Calender = () => {
   const [calenderData, setcalenderData] = useState(
     getCalenderData(currentYear, monthMap[currentMonth])
   );
-  const [range, setRange] = useState<Range>({ first: "", second: "" });
+  const [range, setRange] = useState<Range>({ first: null, second: null });
   console.log(range, "range");
 
   const handleNext = () => {

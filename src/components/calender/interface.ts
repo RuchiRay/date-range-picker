@@ -11,6 +11,6 @@ export interface MonthDaysMap {
 }
 
 export interface Range {
-  first: string;
-  second: string;
+  first: Date | null;
+  second: Date | null;
 }

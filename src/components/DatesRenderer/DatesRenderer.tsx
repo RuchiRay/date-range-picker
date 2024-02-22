@@ -1,5 +1,6 @@
 import React from "react";
 import { DatesRendererProps } from "./interface";
+import { createDate } from "../../utils";
 
 export const DatesRenderer = ({
   calenderData,
@@ -8,22 +9,23 @@ export const DatesRenderer = ({
   setRange,
   range,
 }: DatesRendererProps) => {
-  const date = new Date();
-  const currentDate = date.getDate();
-  console.log(currentDate);
   const handleRange = (date: number) => {
-    if (range.first.length && range.second.length) {
-      setRange({ first: `${date}`, second: "" });
-    } else if (range.first.length) {
-      if (Number(range.first) > date) {
-        setRange({ first: `${date}`, second: range.first });
+    const fullDate = createDate(date, currentMonth, currentYear);
+    if (range.first && range.second) {
+      setRange({
+        first: fullDate,
+        second: null,
+      });
+    } else if (range.first) {
+      if (range.first > fullDate) {
+        setRange({ first: fullDate, second: range.first });
       } else
         setRange((prev) => {
-          return { ...prev, second: `${date}` };
+          return { ...prev, second: fullDate };
         });
     } else {
       setRange((prev) => {
-        return { ...prev, first: `${date}` };
+        return { ...prev, first: fullDate };
       });
     }
   };
@@ -41,9 +43,15 @@ export const DatesRenderer = ({
                   className={`w-12 h-12 flex justify-center items-center cursor-pointer rounded-md  ${
                     date.date === 0 && "opacity-0"
                   } ${
-                    (date.date === Number(range.first) ||
-                      date.date === Number(range.second)) &&
+                    (date.date === range.first?.getDate() ||
+                      date.date === range.second?.getDate()) &&
                     "bg-blue-700 text-white"
+                  } ${
+                    range?.first?.getDate() &&
+                    date.date > range?.first?.getDate() &&
+                    range?.second?.getDate() &&
+                    date.date < range?.second?.getDate() &&
+                    "bg-blue-300"
                   } `}
                 >
                   {date.date}

@@ -53,3 +53,8 @@ export const getYears = () => {
   }
   return yearsData;
 };
+
+export const createDate = (date: number, month: number, year: number) => {
+  const newDate = new Date(year, month, date);
+  return newDate;
+};
