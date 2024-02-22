@@ -5,6 +5,7 @@ import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
 import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
 import { YearsRenderer } from "../YearsRenderer/YearsRenderer";
+import { Range } from "./interface";
 export const Calender = () => {
   const date = new Date();
   const currentDate = date.getDate();
@@ -16,6 +17,8 @@ export const Calender = () => {
   const [calenderData, setcalenderData] = useState(
     getCalenderData(currentYear, monthMap[currentMonth])
   );
+  const [range, setRange] = useState<Range>({ first: "", second: "" });
+  console.log(range, "range");
 
   const handleNext = () => {
     if (currentMonth + 1 < 12) setcurrentMonth((prev) => prev + 1);
@@ -72,7 +75,13 @@ export const Calender = () => {
       ) : (
         <div>
           <WeekRenderer />
-          <DatesRenderer calenderData={calenderData} />
+          <DatesRenderer
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            setRange={setRange}
+            calenderData={calenderData}
+            range={range}
+          />
         </div>
       )}
     </div>

@@ -9,3 +9,8 @@ export interface MonthMap {
 export interface MonthDaysMap {
   [key: string]: number;
 }
+
+export interface Range {
+  first: string;
+  second: string;
+}
