@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getFirstDayOfMonth, isLeapYear } from "../../utils";
-import { dayMap, monthDaysMap, monthMap } from "./contants";
+import { getCalenderData } from "../../utils";
+import { monthMap } from "./contants";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 export const Calender = () => {
   const date = new Date();
@@ -56,14 +56,14 @@ export const Calender = () => {
         </button>
       </div>
       <div>
-        <div className="flex  ">
+        <div className="flex">
           <p className="w-12 h-12">Su</p>
           <p className="w-12 h-12">Mo</p>
           <p className="w-12 h-12">Tu</p>
           <p className="w-12 h-12">We</p>
-          <p className="w-12 h-12 ">Th</p>
-          <p className="w-12 h-12 ">Fr</p>
-          <p className="w-12 h-12 ">Sa</p>
+          <p className="w-12 h-12">Th</p>
+          <p className="w-12 h-12">Fr</p>
+          <p className="w-12 h-12">Sa</p>
         </div>
         {calenderData.map((week) => {
           return (
@@ -81,32 +81,4 @@ export const Calender = () => {
       </div>
     </div>
   );
-};
-
-const getCalenderData = (currentYear: number, currentMonth: string) => {
-  const firstDayOfMonth = getFirstDayOfMonth(currentYear, currentMonth);
-  const calenderData = [];
-  let weekArray = [];
-  let day = 0;
-  for (const key in dayMap) {
-    if (dayMap[key] !== firstDayOfMonth) {
-      weekArray.push({ day: dayMap[key], date: 0 });
-      day++;
-    } else break;
-  }
-  const totalDays =
-    isLeapYear(currentYear) && monthDaysMap[currentMonth] === 28
-      ? 29
-      : monthDaysMap[currentMonth];
-  for (let i = 1; i <= totalDays; i++) {
-    weekArray.push({ day: dayMap[day], date: i });
-    day++;
-    if (day === 7) {
-      calenderData.push(weekArray);
-      weekArray = [];
-      day = 0;
-    }
-  }
-  calenderData.push(weekArray);
-  return calenderData;
 };
