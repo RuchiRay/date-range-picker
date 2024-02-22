@@ -31,16 +31,16 @@ export const DatesRenderer = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       {calenderData.map((week) => {
         return (
-          <div key={Math.random()} className="flex">
+          <div key={Math.random()} className="flex gap-1">
             {week.map((date) => {
               return (
                 <button
                   onClick={() => handleRange(date.date)}
                   key={Math.random()}
-                  className={`w-12 h-12 flex justify-center items-center cursor-pointer rounded-md  ${
+                  className={`w-11 h-11 flex justify-center items-center cursor-pointer rounded-md  ${
                     date.date === 0 && "opacity-0"
                   } ${
                     (date.date === range.first?.getDate() ||
