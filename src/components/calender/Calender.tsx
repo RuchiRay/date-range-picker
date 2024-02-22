@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getFirstDayOfMonth, isLeapYear } from "../../utils";
 import { dayMap, monthDaysMap, monthMap } from "./contants";
-
+import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 export const Calender = () => {
   const date = new Date();
   const currentDate = date.getDate();
@@ -39,9 +39,21 @@ export const Calender = () => {
   return (
     <div className="flex m-auto  flex-col w-max items-center justify-center my-8">
       <div className="mb-4 w-full flex justify-between">
-        <button onClick={handlePrev}>prev</button>
-        {monthMap[currentMonth]} , {currentYear}
-        <button onClick={handleNext}>next</button>
+        <button
+          className="hover:bg-gray-300 rounded-md w-6 flex justify-center items-center"
+          onClick={handlePrev}
+        >
+          <IoChevronBackOutline />
+        </button>
+        <button className="hover:bg-gray-300 rounded-md  px-4 py-1">
+          {monthMap[currentMonth]} {currentYear}
+        </button>
+        <button
+          className="hover:bg-gray-300 rounded-md w-6 flex justify-center items-center"
+          onClick={handleNext}
+        >
+          <IoChevronForward />
+        </button>
       </div>
       <div>
         <div className="flex  ">
