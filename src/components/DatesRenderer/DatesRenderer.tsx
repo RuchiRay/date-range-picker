@@ -10,10 +10,11 @@ export const DatesRenderer = ({ calenderData }: DatesRendererProps) => {
     <div>
       {calenderData.map((week) => {
         return (
-          <div className="flex">
+          <div key={Math.random()} className="flex">
             {week.map((date) => {
               return (
                 <p
+                  key={Math.random()}
                   className={`w-12 h-12 flex justify-center items-center cursor-pointer rounded-md hover:bg-blue-100 hover:text-blue-600  ${
                     date.date === 0 && "opacity-0"
                   } ${
