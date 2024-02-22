@@ -9,9 +9,14 @@ export const DatesRenderer = ({
   setRange,
   range,
 }: DatesRendererProps) => {
-  const handleRange = (date: number) => {
+  const handleRange = (date: number, day: string) => {
     const fullDate = createDate(date, currentMonth, currentYear);
-    if (range.first && range.second) {
+    if (day === "Sa" || day === "Su") {
+      setRange({
+        first: null,
+        second: null,
+      });
+    } else if (range.first && range.second) {
       setRange({
         first: fullDate,
         second: null,
@@ -45,7 +50,7 @@ export const DatesRenderer = ({
 
               return (
                 <button
-                  onClick={() => handleRange(date.date)}
+                  onClick={() => handleRange(date.date, date.day)}
                   key={Math.random()}
                   className={`w-11 h-11 flex justify-center items-center cursor-pointer rounded-md  ${
                     date.date === 0 && "opacity-0"
@@ -58,7 +63,12 @@ export const DatesRenderer = ({
                     fullDate > range?.first &&
                     range?.second &&
                     fullDate < range?.second &&
+                    date.day !== "Su" &&
+                    date.day !== "Sa" &&
                     "bg-blue-300"
+                  } ${
+                    (date.day === "Su" || date.day === "Sa") &&
+                    "cursor-not-allowed"
                   } `}
                 >
                   {date.date}
