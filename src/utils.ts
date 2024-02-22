@@ -41,3 +41,15 @@ export const getCalenderData = (currentYear: number, currentMonth: string) => {
   calenderData.push(weekArray);
   return calenderData;
 };
+
+export const getYears = () => {
+  let yearsData = [];
+  for (let i = 1900; i <= 2100; i++) {
+    let year = {
+      year: i,
+      months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    };
+    yearsData.push(year);
+  }
+  return yearsData;
+};

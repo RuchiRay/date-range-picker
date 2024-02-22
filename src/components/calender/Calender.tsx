@@ -4,6 +4,7 @@ import { monthMap } from "./contants";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
 import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
+import { YearsRenderer } from "../YearsRenderer/YearsRenderer";
 export const Calender = () => {
   const date = new Date();
   const currentDate = date.getDate();
@@ -40,7 +41,7 @@ export const Calender = () => {
   }, [currentMonth, currentYear]);
 
   return (
-    <div className="flex m-auto  flex-col w-max items-center justify-center my-8">
+    <div className="flex m-auto border-2 rounded-md p-6 border-gray-300 border-solid  flex-col w-max items-center justify-center my-8">
       <div className="mb-4 w-full flex justify-between">
         <button
           className="hover:bg-gray-300 rounded-md w-6 flex justify-center items-center"
@@ -48,7 +49,10 @@ export const Calender = () => {
         >
           <IoChevronBackOutline />
         </button>
-        <button className="hover:bg-gray-300 rounded-md  px-4 py-1">
+        <button
+          onClick={() => setshowOtherYears(!showOtherYears)}
+          className="hover:bg-gray-300 cursor-pointer rounded-md  px-4 py-1"
+        >
           {monthMap[currentMonth]} {currentYear}
         </button>
         <button
@@ -58,10 +62,19 @@ export const Calender = () => {
           <IoChevronForward />
         </button>
       </div>
-      <div>
-        <WeekRenderer />
-        <DatesRenderer calenderData={calenderData} />
-      </div>
+      {showOtherYears ? (
+        <YearsRenderer
+          setcurrentYear={setcurrentYear}
+          setCurrentMonth={setcurrentMonth}
+          setshowOtherYears={setshowOtherYears}
+          currentYear={currentYear}
+        />
+      ) : (
+        <div>
+          <WeekRenderer />
+          <DatesRenderer calenderData={calenderData} />
+        </div>
+      )}
     </div>
   );
 };
