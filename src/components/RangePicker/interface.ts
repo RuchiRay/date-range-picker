@@ -24,3 +24,7 @@ export interface CalenderDate {
   day: string;
   date: number;
 }
+
+export interface RangePickerProps {
+  setRangeSelected: React.Dispatch<React.SetStateAction<(string | null)[][]>>;
+}

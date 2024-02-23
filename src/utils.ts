@@ -84,3 +84,17 @@ export const formatDate = (fullDate: Date | null) => {
   }
   return null;
 };
+
+export const getWeekendsBetweenDates = (startDate: Date, endDate: Date) => {
+  const weekends = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+      weekends.push(formatDate(new Date(currentDate)));
+    }
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return weekends;
+};

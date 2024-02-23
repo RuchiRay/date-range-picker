@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { formatDate, getCalenderData, isLeapYear } from "../../utils";
+import {
+  formatDate,
+  getCalenderData,
+  getWeekendsBetweenDates,
+  isLeapYear,
+} from "../../utils";
 import { monthDaysMap, monthMap } from "./contants";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
 import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
 import { YearsRenderer } from "../YearsRenderer/YearsRenderer";
-import { Range } from "./interface";
-export const RangePicker = () => {
+import { Range, RangePickerProps } from "./interface";
+export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
   const date = new Date();
 
   const [currentMonth, setcurrentMonth] = useState(date.getMonth());
@@ -83,7 +88,14 @@ export const RangePicker = () => {
     );
     setRange({ first, second });
   };
-  console.log(range);
+
+  useEffect(() => {
+    if (range.first && range.second) {
+      const dateRange = [formatDate(range.first), formatDate(range.second)];
+      const weekends = getWeekendsBetweenDates(range.first, range.second);
+      if (dateRange && weekends) setRangeSelected([dateRange, weekends]);
+    }
+  }, [range, setRangeSelected]);
 
   return (
     <div className="flex w-[401px] m-auto border-2 rounded-md p-6 border-gray-300 border-solid  flex-col  items-center justify-center my-8">
