@@ -3,6 +3,7 @@ import {
   formatDate,
   getCalenderData,
   getLast7DaysWithoutWeekends,
+  getWeekWithoutWeekends,
   getWeekendsBetweenDates,
   isLeapYear,
 } from "../../utils";
@@ -47,7 +48,6 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
     const { first, second } = getLast7DaysWithoutWeekends(days);
     if (first && second) setRange({ first, second });
   };
-  console.log(range, "range");
 
   const handleThisMonth = () => {
     const first = new Date(currentYear, currentMonth, 1);
@@ -62,19 +62,13 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
   };
 
   const handleLastWeek = () => {
-    let currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    const second = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const first = new Date(second.getTime() - 7 * 24 * 60 * 60 * 1000);
-    setRange({ first, second });
+    const { first, second } = getWeekWithoutWeekends(-1);
+    if (first && second) setRange({ first, second });
   };
 
   const handleNextWeek = () => {
-    let currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    const first = new Date(currentDate.getTime() + 1 * 24 * 60 * 60 * 1000);
-    const second = new Date(first.getTime() + 7 * 24 * 60 * 60 * 1000);
-    setRange({ first, second });
+    const { first, second } = getWeekWithoutWeekends(1);
+    if (first && second) setRange({ first, second });
   };
 
   const handleLastMonth = () => {

@@ -119,3 +119,26 @@ export const getLast7DaysWithoutWeekends = (days: number) => {
 
   return { first, second };
 };
+
+export const getWeekWithoutWeekends = (offset: number) => {
+  const today = new Date();
+  let currentDay = new Date(today);
+  currentDay.setHours(0, 0, 0, 0);
+  currentDay.setDate(currentDay.getDate() + offset * 7);
+
+  let first, second;
+  let daysFound = 0;
+
+  while (daysFound < 5) {
+    if (currentDay.getDay() !== 6 && currentDay.getDay() !== 0) {
+      if (!first) {
+        first = new Date(currentDay);
+      }
+      second = new Date(currentDay);
+      daysFound++;
+    }
+    currentDay.setDate(currentDay.getDate() + 1);
+  }
+
+  return { first, second };
+};
