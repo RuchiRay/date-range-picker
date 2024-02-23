@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { DatesRendererProps } from "./interface";
 import { createDate } from "../../utils";
 
@@ -9,8 +8,6 @@ export const DatesRenderer = ({
   setRange,
   range,
 }: DatesRendererProps) => {
-  const [hoveredDate, setHoveredDate] = useState();
-
   const handleRange = (date: number, day: string) => {
     const fullDate = createDate(date, currentMonth, currentYear);
     if (day === "Sa" || day === "Su") {
@@ -36,13 +33,6 @@ export const DatesRenderer = ({
       });
     }
   };
-  console.log(range);
-
-  const handlehover = (date: number, day: string) => {
-    const fullDate = createDate(date, currentMonth, currentYear);
-    if (range.first) {
-    }
-  };
 
   return (
     <div className="flex flex-col gap-1">
@@ -55,18 +45,9 @@ export const DatesRenderer = ({
                 calenderData.month,
                 currentYear
               );
-              // console.log(
-              //   fullDate.getTime() === range.first?.getTime(),
-              //   "check",
-              //   fullDate.getTime(),
-              //   range.first?.getTime(),
-              //   date,
-              //   fullDate
-              // );
 
               return (
                 <button
-                  onMouseOver={() => handlehover(date.date, date.day)}
                   onClick={() => handleRange(date.date, date.day)}
                   key={Math.random()}
                   className={`w-11 h-11 flex justify-center items-center cursor-pointer rounded-md  ${
