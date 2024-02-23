@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   formatDate,
   getCalenderData,
+  getLast7DaysWithoutWeekends,
   getWeekendsBetweenDates,
   isLeapYear,
 } from "../../utils";
@@ -43,21 +44,10 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
   }, [currentMonth, currentYear]);
 
   const handleLastDays = (days: number) => {
-    let currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    let second = currentDate;
-    if (second.getDay() === 0) {
-      second.setDate(second.getDate() - 2);
-    } else if (second.getDay() === 6) {
-      second.setDate(second.getDate() - 1);
-    }
-    let first = new Date(second.getTime() - (days + 1) * 24 * 60 * 60 * 1000);
-
-    if (first.getDay() === 0 || first.getDay() === 6)
-      first.setDate(first.getDate() - 2);
-
-    setRange({ first: first, second: second });
+    const { first, second } = getLast7DaysWithoutWeekends(days);
+    if (first && second) setRange({ first, second });
   };
+  console.log(range, "range");
 
   const handleThisMonth = () => {
     const first = new Date(currentYear, currentMonth, 1);

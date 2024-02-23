@@ -98,3 +98,24 @@ export const getWeekendsBetweenDates = (startDate: Date, endDate: Date) => {
 
   return weekends;
 };
+
+export const getLast7DaysWithoutWeekends = (days: number) => {
+  const today = new Date();
+  let daysFound = 0;
+  let currentDay = new Date(today);
+  currentDay.setHours(0, 0, 0, 0);
+  let first, second;
+
+  while (daysFound < days) {
+    if (currentDay.getDay() !== 6 && currentDay.getDay() !== 0) {
+      if (!second) {
+        second = new Date(currentDay);
+      }
+      first = new Date(currentDay);
+      daysFound++;
+    }
+    currentDay.setDate(currentDay.getDate() - 1);
+  }
+
+  return { first, second };
+};
