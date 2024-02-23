@@ -1,4 +1,4 @@
-import { CalenderData, Range } from "../calender/interface";
+import { CalenderData, Range } from "../RangePicker/interface";
 
 export interface DatesRendererProps {
   calenderData: CalenderData;

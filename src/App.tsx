@@ -1,10 +1,10 @@
 import React from "react";
-import { Calender } from "./components/calender/Calender";
+import { RangePicker } from "./components/RangePicker/RangePicker";
 
 function App() {
   return (
     <div className="App">
-      <Calender />
+      <RangePicker />
     </div>
   );
 }

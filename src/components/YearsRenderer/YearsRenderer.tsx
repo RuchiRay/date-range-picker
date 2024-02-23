@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { getYears } from "../../utils";
 import { YearsRendererProps } from "./interface";
 

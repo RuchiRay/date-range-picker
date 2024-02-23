@@ -1,5 +1,9 @@
-import { dayMap, monthDaysMap, monthMap } from "./components/calender/contants";
-import { CalenderData } from "./components/calender/interface";
+import {
+  dayMap,
+  monthDaysMap,
+  monthMap,
+} from "./components/RangePicker/contants";
+import { CalenderData } from "./components/RangePicker/interface";
 
 export const getFirstDayOfMonth = (
   currentYear: number,

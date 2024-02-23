@@ -6,10 +6,8 @@ import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
 import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
 import { YearsRenderer } from "../YearsRenderer/YearsRenderer";
 import { Range } from "./interface";
-export const Calender = () => {
+export const RangePicker = () => {
   const date = new Date();
-  const currentDate = date.getDate();
-  const currentDay = date.getDay();
 
   const [currentMonth, setcurrentMonth] = useState(date.getMonth());
   const [currentYear, setcurrentYear] = useState(date.getFullYear());
