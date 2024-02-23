@@ -46,39 +46,52 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
 
   const handleLastDays = (days: number) => {
     const { first, second } = getLast7DaysWithoutWeekends(days);
-    if (first && second) setRange({ first, second });
-  };
 
-  const handleThisMonth = () => {
-    const first = new Date(currentYear, currentMonth, 1);
-    const second = new Date(
-      currentYear,
-      currentMonth,
-      isLeapYear(currentYear) && currentMonth === 1
-        ? 29
-        : monthDaysMap[monthMap[currentMonth]]
-    );
-    setRange({ first, second });
+    if (first && second) {
+      setcurrentMonth(first?.getMonth());
+      setcurrentYear(first.getFullYear());
+      setRange({ first, second });
+    }
   };
 
   const handleLastWeek = () => {
     const { first, second } = getWeekWithoutWeekends(-1);
-    if (first && second) setRange({ first, second });
+    if (first && second) {
+      setcurrentMonth(first?.getMonth());
+      setcurrentYear(first.getFullYear());
+      setRange({ first, second });
+    }
   };
 
   const handleNextWeek = () => {
     const { first, second } = getWeekWithoutWeekends(1);
-    if (first && second) setRange({ first, second });
+    if (first && second) {
+      setcurrentMonth(first?.getMonth());
+      setcurrentYear(first.getFullYear());
+      setRange({ first, second });
+    }
   };
 
-  const handleLastMonth = () => {
-    const first = new Date(currentYear, currentMonth - 1, 1);
-    const second = new Date(
+  const handleMonth = (val: number) => {
+    let first = new Date(currentYear, currentMonth - val, 1);
+    if (first.getDay() === 6) {
+      first.setDate(first.getDate() + 2);
+    }
+    if (first.getDay() === 0) first.setDate(first.getDate() + 1);
+    let second = new Date(
       currentYear,
-      currentMonth - 1,
-      monthDaysMap[monthMap[currentMonth - 1]]
+      currentMonth - val,
+      isLeapYear(currentYear) && currentMonth - val === 1
+        ? 29
+        : monthDaysMap[monthMap[currentMonth - val]]
     );
+    if (second.getDay() === 6) {
+      second.setDate(second.getDate() - 1);
+    }
+    if (second.getDay() === 0) second.setDate(second.getDate() - 2);
     setRange({ first, second });
+    setcurrentMonth(first?.getMonth());
+    setcurrentYear(first.getFullYear());
   };
 
   useEffect(() => {
@@ -148,7 +161,7 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
               Last 30 days
             </button>
             <button
-              onClick={handleThisMonth}
+              onClick={() => handleMonth(0)}
               className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
             >
               This month
@@ -166,7 +179,7 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
               Next week
             </button>
             <button
-              onClick={handleLastMonth}
+              onClick={() => handleMonth(1)}
               className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
             >
               Last Month
