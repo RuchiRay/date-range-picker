@@ -1,4 +1,5 @@
-import { getYears } from "../../utils";
+import { useEffect, useRef } from "react";
+import { getYearIndex, getYears } from "../../utils";
 import { YearsRendererProps } from "./interface";
 
 export const YearsRenderer = ({
@@ -14,8 +15,16 @@ export const YearsRenderer = ({
     setCurrentMonth(month);
     setshowOtherYears(false);
   };
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (componentRef.current) {
+      componentRef.current?.scrollTo(0, 106 * getYearIndex(currentYear));
+    }
+  }, [currentYear]);
+
   return (
-    <div className="w-[336px] h-[300px] overflow-y-auto">
+    <div ref={componentRef} className="w-[336px] h-[300px] overflow-y-auto">
       {yearsData.map((year) => {
         return (
           <div

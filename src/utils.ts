@@ -142,3 +142,16 @@ export const getWeekWithoutWeekends = (offset: number) => {
 
   return { first, second };
 };
+
+export const getYearIndex = (year: number) => {
+  let index = "";
+  if (year < 2000) {
+    if (year < 1910) index = `${year}`.substring(3, 4);
+    index = `${year}`.substring(2, 4);
+  } else {
+    index = `${year}`.substring(2, 4);
+    index = "1" + index;
+  }
+  if (year === 2100) return 200;
+  return Number(index);
+};
