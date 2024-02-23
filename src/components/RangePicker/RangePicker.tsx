@@ -45,9 +45,17 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
   const handleLastDays = (days: number) => {
     let currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
-    let second = date;
-    second.setHours(0, 0, 0, 0);
-    const first = new Date(currentDate.getTime() - days * 24 * 60 * 60 * 1000);
+    let second = currentDate;
+    if (second.getDay() === 0) {
+      second.setDate(second.getDate() - 2);
+    } else if (second.getDay() === 6) {
+      second.setDate(second.getDate() - 1);
+    }
+    let first = new Date(second.getTime() - (days + 1) * 24 * 60 * 60 * 1000);
+
+    if (first.getDay() === 0 || first.getDay() === 6)
+      first.setDate(first.getDate() - 2);
+
     setRange({ first: first, second: second });
   };
 
