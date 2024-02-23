@@ -47,6 +47,14 @@ export const DatesRenderer = ({
                 calenderData.month,
                 currentYear
               );
+              // console.log(
+              //   fullDate.getTime() === range.first?.getTime(),
+              //   "check",
+              //   fullDate.getTime(),
+              //   range.first?.getTime(),
+              //   date,
+              //   fullDate
+              // );
 
               return (
                 <button
@@ -65,7 +73,7 @@ export const DatesRenderer = ({
                     fullDate < range?.second &&
                     date.day !== "Su" &&
                     date.day !== "Sa" &&
-                    "bg-blue-300"
+                    "bg-blue-200 text-blue-700"
                   } ${
                     (date.day === "Su" || date.day === "Sa") &&
                     "cursor-not-allowed"

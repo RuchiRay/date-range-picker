@@ -15,7 +15,7 @@ export const YearsRenderer = ({
     setshowOtherYears(false);
   };
   return (
-    <div className="w-[336px] h-[288px] overflow-y-auto">
+    <div className="w-[336px] h-[300px] overflow-y-auto">
       {yearsData.map((year) => {
         return (
           <div className="flex py-2 border-b-2 border-b-gray-300 border-dashed items-center gap-4">

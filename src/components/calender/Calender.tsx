@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getCalenderData } from "../../utils";
-import { monthMap } from "./contants";
+import { formatDate, getCalenderData, isLeapYear } from "../../utils";
+import { monthDaysMap, monthMap } from "./contants";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5";
 import { WeekRenderer } from "../WeekRenderer/WeekRenderer";
 import { DatesRenderer } from "../DatesRenderer/DatesRenderer";
@@ -39,8 +39,61 @@ export const Calender = () => {
     setcalenderData(newCalenderData);
   }, [currentMonth, currentYear]);
 
+  const handleLastDays = (days: number) => {
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    let second = date;
+    second.setHours(0, 0, 0, 0);
+    const first = new Date(currentDate.getTime() - days * 24 * 60 * 60 * 1000);
+    setRange({ first: first, second: second });
+  };
+
+  const handleThisMonth = () => {
+    const first = new Date(currentYear, currentMonth, 1);
+    const second = new Date(
+      currentYear,
+      currentMonth,
+      isLeapYear(currentYear) && currentMonth === 1
+        ? 29
+        : monthDaysMap[monthMap[currentMonth]]
+    );
+    setRange({ first, second });
+  };
+
+  const handleLastWeek = () => {
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const second = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const first = new Date(second.getTime() - 7 * 24 * 60 * 60 * 1000);
+    setRange({ first, second });
+  };
+
+  const handleNextWeek = () => {
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const first = new Date(currentDate.getTime() + 1 * 24 * 60 * 60 * 1000);
+    const second = new Date(first.getTime() + 7 * 24 * 60 * 60 * 1000);
+    setRange({ first, second });
+  };
+
+  const handleLastMonth = () => {
+    const first = new Date(currentYear, currentMonth - 1, 1);
+    const second = new Date(
+      currentYear,
+      currentMonth - 1,
+      monthDaysMap[monthMap[currentMonth - 1]]
+    );
+    setRange({ first, second });
+  };
+  console.log(range);
+
   return (
-    <div className="flex m-auto border-2 rounded-md p-6 border-gray-300 border-solid  flex-col w-max items-center justify-center my-8">
+    <div className="flex w-[401px] m-auto border-2 rounded-md p-6 border-gray-300 border-solid  flex-col  items-center justify-center my-8">
+      <div className="border-b-2 border-b-gray-300 w-full text-center pb-4 mb-4">
+        {formatDate(range.first) ?? "yyyy-mm-dd"}~
+        {formatDate(range.second) ?? "yyyy-mm-dd"}
+      </div>
+
       <div className="mb-4 w-full flex justify-between">
         <button
           className="hover:bg-gray-300 rounded-md w-6 flex justify-center items-center"
@@ -78,6 +131,44 @@ export const Calender = () => {
             calenderData={calenderData}
             range={range}
           />
+          <div className="flex flex-wrap gap-4 mt-4 cursor-pointer border-t-2 border-t-gray-300 pt-5">
+            <button
+              onClick={() => handleLastDays(7)}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              Last 7 days
+            </button>
+            <button
+              onClick={() => handleLastDays(30)}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              Last 30 days
+            </button>
+            <button
+              onClick={handleThisMonth}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              This month
+            </button>
+            <button
+              onClick={handleLastWeek}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              Last week
+            </button>
+            <button
+              onClick={handleNextWeek}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              Next week
+            </button>
+            <button
+              onClick={handleLastMonth}
+              className="rounded-md py-1 px-3 hover:bg-gray-300 bg-gray-200"
+            >
+              Last Month
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -32,7 +32,7 @@ export const getCalenderData = (currentYear: number, currentMonth: number) => {
   }
 
   const totalDays =
-    isLeapYear(currentYear) && monthDaysMap[monthMap[currentMonth]] === 28
+    isLeapYear(currentYear) && currentMonth === 1
       ? 29
       : monthDaysMap[monthMap[currentMonth]];
 
@@ -65,4 +65,18 @@ export const getYears = () => {
 export const createDate = (date: number, month: number, year: number) => {
   const newDate = new Date(year, month, date);
   return newDate;
+};
+
+export const formatDate = (fullDate: Date | null) => {
+  if (fullDate) {
+    const month =
+      fullDate.getMonth() > 9
+        ? fullDate.getMonth() + 1
+        : `0${fullDate.getMonth() + 1}`;
+    const date =
+      fullDate.getDate() > 9 ? fullDate.getDate() : `0${fullDate.getDate()}`;
+    const newDate = `${fullDate.getFullYear()}-${month}-${date}`;
+    return newDate;
+  }
+  return null;
 };
