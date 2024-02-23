@@ -122,6 +122,7 @@ export const RangePicker = ({ setRangeSelected }: RangePickerProps) => {
           setCurrentMonth={setcurrentMonth}
           setshowOtherYears={setshowOtherYears}
           currentYear={currentYear}
+          currentMonth={currentMonth}
         />
       ) : (
         <div>
